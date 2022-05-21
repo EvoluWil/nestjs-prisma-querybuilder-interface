@@ -4,6 +4,12 @@
 
 <br/>
 
+## Use case
+
+### this is a frontend interface to https://github.com/HarielThums/nestjs-prisma-querybuilder
+
+<br/>
+
 ### Documentação / Documentation
 
 - **How to install it?**
@@ -77,6 +83,6 @@
 
 contains, endsWith, startsWith, equals, gt, gte, in, lt, lte ,not, notIn
 
-# END
+### END
 
 - Nestjs/Prisma Querybuilder Interface is ISC licensed.

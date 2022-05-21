@@ -1,0 +1,36 @@
+{
+  "name": "nestjs-prisma-querybuilder-interface",
+  "version": "1.0.0",
+  "description": "Frontend interface to nestjs-prisma-querybuilder",
+  "main": "dist/index.js",
+  "types": "./dist/index.d.ts",
+  "keywords": [
+    "query",
+    "querybuilder",
+    "prisma",
+    "nest",
+    "nestjs-prisma-querybuilder",
+    "nestjs-querybuilder",
+    "prisma-querybuilder",
+    "interface",
+    "qs"
+  ],
+  "files": [
+    "dist/**/*",
+    "*.md"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "author": "Will",
+  "license": "ISC",
+  "dependencies": {
+    "@types/qs": "^6.9.7",
+    "qs": "^6.10.3"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.4"
+  }
+}

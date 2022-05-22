@@ -118,9 +118,9 @@
 | limit     | number                 | limit: 20,                                       |
 | sort      | 'asc' or 'desc'        | sort: 'asc',                                     |
 | sortField | string                 | sortField: 'name',                               |
-| populate  | Populate               | populate: [{path: 'car', select: 'model plate'}] |
+| populate  | Populate[ ]            | populate: [{path: 'car', select: 'model plate'}] |
 | operator  | 'and' or 'or' or 'not' | operator: 'and' ` => use with filter`            |
-| filter    | FiltersFields[]        | filter: [{path: 'name', value: 'willian'}]       |
+| filter    | FiltersFields[ ]       | filter: [{path: 'name', value: 'willian'}]       |
 
   <br/>
 

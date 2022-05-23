@@ -87,7 +87,7 @@
   ```tsx
   import { QueryString } from 'nestjs-prisma-querybuilder-interface';
 
-  const query = QueryToUrl({
+  const query = QueryString({
     select: 'message title date',
     populate: [
       {

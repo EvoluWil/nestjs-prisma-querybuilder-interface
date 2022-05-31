@@ -1,7 +1,7 @@
 interface Populate {
   path: string;
   select: string;
-  populate?: Populate;
+  populate?: Populate[];
 }
 
 interface FiltersFields {

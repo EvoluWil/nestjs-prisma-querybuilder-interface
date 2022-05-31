@@ -87,7 +87,7 @@
   ```tsx
   import { QueryString } from 'nestjs-prisma-querybuilder-interface';
 
-  const query = QueryToUrl({
+  const query = QueryString({
     select: 'message title date',
     populate: [
       {
@@ -126,11 +126,11 @@
 
 - **Populate**
 
-| Name     | Type     | exemple                                     |
-| -------- | -------- | ------------------------------------------- |
-| path     | string   | path: 'picture'                             |
-| select   | string   | select: 'url extencion',                    |
-| populate | Populate | populate: [{path: 'post', select: 'title'}] |
+| Name     | Type        | exemple                                     |
+| -------- | ----------- | ------------------------------------------- |
+| path     | string      | path: 'picture'                             |
+| select   | string      | select: 'url extencion',                    |
+| populate | Populate[ ] | populate: [{path: 'post', select: 'title'}] |
 
   <br/>
 

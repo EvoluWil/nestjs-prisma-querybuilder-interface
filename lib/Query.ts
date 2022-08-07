@@ -1,10 +1,10 @@
-interface Populate {
+export interface Populate {
   path: string;
   select: string;
   populate?: Populate[];
 }
 
-interface FiltersFields {
+export interface FiltersFields {
   path: string;
   value: string;
   type?: 'string' | 'boolean' | 'number' | 'date';

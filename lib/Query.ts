@@ -1,27 +1,5 @@
-export interface Populate {
-  path: string;
-  select: string;
-  populate?: Populate[];
-}
-
-export interface FiltersFields {
-  path: string;
-  value: string;
-  type?: 'string' | 'boolean' | 'number' | 'date';
-  operator?:
-    | 'contains'
-    | 'endsWith'
-    | 'startsWith'
-    | 'equals'
-    | 'gt'
-    | 'gte'
-    | 'in'
-    | 'lt'
-    | 'lte'
-    | 'not'
-    | 'notIn';
-}
-
+import { FiltersFields } from './FiltersFields';
+import { Populate } from './Populate';
 export interface Query {
   select: string;
   page?: number;

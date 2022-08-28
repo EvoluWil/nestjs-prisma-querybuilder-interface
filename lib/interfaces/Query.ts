@@ -1,12 +1,12 @@
 import { FiltersFields } from './FiltersFields';
 import { Populate } from './Populate';
+import { SortFields } from './SortFields';
+
 export interface Query {
   select: string;
   page?: number;
   limit?: number;
-  sort?: 'asc' | 'desc';
-  sortField?: string;
+  sort?: SortFields;
   populate?: Populate[];
-  operator?: 'and' | 'or' | 'not';
-  filter?: FiltersFields[];
+  filter?: FiltersFields;
 }

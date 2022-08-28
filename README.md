@@ -22,140 +22,169 @@
 
 - **How to use it?**
 
-- use in PARAMS with
-
-  - AXIOS
-
-  <br/>
-
-  ```tsx
-  import { QueryString, Query } from 'nestjs-prisma-querybuilder-interface';
-
-  const query: Query = {
-    select: 'message title date',
-    populate: [
-      {
-        path: 'user',
-        select: 'name email'
-      }
-    ],
-    sort: 'asc',
-    sortField: 'date',
-    limit: 20
-  };
-
-  axios.get('http://example.com/movies', {
-    params: query,
-    paramsSerializer: params => QueryString(params)
-  });
-  ```
-
-  - ANGULAR
+  - use in PARAMS with **AXIOS**
 
     <br/>
 
-  ```tsx
-  import { HttpParams } from '@angular/common/http';
-  import { QueryString, Query } from 'nestjs-prisma-querybuilder-interface';
+    ```tsx
+    import { QueryString, Query } from 'nestjs-prisma-querybuilder-interface';
 
-  const query: Query = {
-    select: 'message title date',
+    const query: Query = {
+      select: 'message title date',
+      populate: [
+        {
+          path: 'user',
+          select: 'name email'
+        }
+      ],
+      sort: { field: name, criteria: 'asc' },
+      page: 1,
+      limit: 20
+    };
+
+    axios.get('http://example.com/movies', {
+      params: query,
+      paramsSerializer: params => QueryString(params)
+    });
+    ```
+
+    <br/>
+
+  - use in URL
+
+    <br/>
+
+    ```tsx
+    import { QueryString } from 'nestjs-prisma-querybuilder-interface';
+
+    const query = QueryString({
+      select: 'message title date',
+      populate: [
+        {
+          path: 'user',
+          select: 'name email'
+        }
+      ],
+      sort: 'asc',
+      sortField: 'date',
+      limit: 20
+    });
+
+    fetch(`http://example.com/movies?${query}`);
+
+    // with axios
+
+    axios.get(`http://example.com/movies?${query}`);
+    ```
+
+  <br/>
+
+- **Property**
+
+  - Usage
+
+    | Name     | Type              | exemple                                          |
+    | -------- | ----------------- | ------------------------------------------------ |
+    | select   | string            | select: 'name email',                            |
+    | page     | number            | page: 2,                                         |
+    | limit    | number            | limit: 20,                                       |
+    | sort     | SortFields        | sort: {field: string, criteria: 'asc'},          |
+    | populate | Populate [ ]      | populate: [{path: 'car', select: 'model plate'}] |
+    | filter   | FiltersFields [ ] | filter: [{name: 'jonas'}, {value: { gte: 4 }}]   |
+
+      <br/>
+
+- **Exported Interfaces**
+
+  - **Query**
+
+    is a full types
+
+  - **Populate**
+
+    | Name     | Type         | exemple                                     |
+    | -------- | ------------ | ------------------------------------------- |
+    | path     | string       | path: 'picture'                             |
+    | select   | string       | select: 'url extension',                    |
+    | populate | Populate [ ] | populate: [{path: 'post', select: 'title'}] |
+
+  <br/>
+
+  - **FilterFields**
+
+    | Name | Type       | exemple                                                             |
+    | ---- | ---------- | ------------------------------------------------------------------- |
+    | x    | Filter     | {name: { contains: 'Jonas' } }                                      |
+    | and  | Filter [ ] | {and: [{name: { contains: 'Jonas' }, {active: true }}]}             |
+    | or   | Filter [ ] | {or: [{post: { contains: 'hello' }, {post: { contains: 'world' }}]} |
+
+    - **Filter**
+
+      { key: value } with Operator 'equals'
+
+      exemple: { postId: 147 }
+
+      or
+
+      { key: { operator: value } }
+
+      exemple: { postId: { startsWith : 147 } }
+
+      <br/>
+
+    - **Operators**
+
+      contains, endsWith, startsWith, equals, gt, gte, in, lt, lte ,not, notIn
+
+  <br/>
+
+- **Full usage exemple**
+
+  ```tsx
+  QueryString({
+    select: 'firstName picture',
     populate: [
       {
-        path: 'user',
-        select: 'name email'
+        path: 'car',
+        select: 'model plate',
+        populate: [
+          {
+            path: 'brand',
+            select: 'name'
+          }
+        ]
       }
     ],
-    sort: 'asc',
-    sortField: 'date',
-    limit: 20
-  };
-
-  const params = new HttpParams({ fromString: QueryString(params) });
-
-  axios.get('http://example.com/movies', {
-    params // params: params
-  });
-  ```
-
-  <br/>
-
-- use in URL
-
-  <br/>
-
-  ```tsx
-  import { QueryString } from 'nestjs-prisma-querybuilder-interface';
-
-  const query = QueryString({
-    select: 'message title date',
-    populate: [
+    filter: [
       {
-        path: 'user',
-        select: 'name email'
+        createdAt: { lte: new Date() }
+      },
+      {
+        or: [
+          {
+            role: 'admin'
+          },
+          {
+            active: true
+          }
+        ]
+      },
+      {
+        and: [
+          {
+            firstName: 'Matt'
+          },
+          {
+            lastName: { contains: 'Ryan' }
+          }
+        ]
       }
-    ],
-    sort: 'asc',
-    sortField: 'date',
-    limit: 20
+    ]
   });
-
-  fetch(`http://example.com/movies?${query}`);
-
-  // with axios
-
-  axios.get(`http://example.com/movies?${query}`);
   ```
-
-  <br/>
-
-- **Properts**
-
-| Name      | Type                   | exemple                                          |
-| --------- | ---------------------- | ------------------------------------------------ |
-| select    | string                 | select: 'name email',                            |
-| page      | number                 | page: 2,                                         |
-| limit     | number                 | limit: 20,                                       |
-| sort      | 'asc' or 'desc'        | sort: 'asc',                                     |
-| sortField | string                 | sortField: 'name',                               |
-| populate  | Populate[ ]            | populate: [{path: 'car', select: 'model plate'}] |
-| operator  | 'and' or 'or' or 'not' | operator: 'and' ` => use with filter`            |
-| filter    | FiltersFields[ ]       | filter: [{path: 'name', value: 'willian'}]       |
-
-  <br/>
-
-- **Populate**
-
-| Name     | Type        | exemple                                     |
-| -------- | ----------- | ------------------------------------------- |
-| path     | string      | path: 'picture'                             |
-| select   | string      | select: 'url extencion',                    |
-| populate | Populate[ ] | populate: [{path: 'post', select: 'title'}] |
-
-  <br/>
-
-- **FilterFields**
-
-| Name     | Type                                        | exemple                              |
-| -------- | ------------------------------------------- | ------------------------------------ |
-| path     | string                                      | path: 'picture'                      |
-| value    | string                                      | value: 'url',                        |
-| type     | 'string' or 'boolean' or 'number' or 'date' | type: 'number', ` => default string` |
-| operator | string                                      | operator: 'equals',                  |
-
-  <br/>
-
-- **Operators**
-
-contains, endsWith, startsWith, equals, gt, gte, in, lt, lte ,not, notIn
-
-  <br/>
 
 ### END
 
 - Nestjs/Prisma Querybuilder Interface is ISC licensed.
-
-
-
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FWillian-Rodrigues%2Fnestjs-prisma-querybuilder-interface&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)

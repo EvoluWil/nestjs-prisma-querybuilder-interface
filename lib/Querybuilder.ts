@@ -1,6 +1,12 @@
 import { stringify } from 'qs';
-import { Query } from './Query';
+import { QueryParse } from './functions/QueryParse';
+import { Query } from './interfaces/Query';
 
 export function QueryString(query: Query): string {
-  return stringify(query);
+  if (query?.filter) {
+    const filters = QueryParse(query.filter);
+    return stringify({ ...query, filters });
+  } else {
+    return stringify(query);
+  }
 }

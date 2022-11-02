@@ -1,4 +1,4 @@
-export * from './lib/interfaces/Filter';
+export { Filter } from './lib/interfaces/Filter';
 export * from './lib/interfaces/Query';
-export * from './lib/interfaces/Populate';
+export { Populate } from './lib/interfaces/Populate';
 export * from './lib/Querybuilder';

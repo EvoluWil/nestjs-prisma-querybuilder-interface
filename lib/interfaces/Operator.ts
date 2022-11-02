@@ -9,4 +9,8 @@ export type Operator =
   | 'lt'
   | 'lte'
   | 'not'
-  | 'notIn';
+  | 'notIn'
+  | 'hasEvery'
+  | 'hasSome'
+  | 'has'
+  | 'isEmpty';

@@ -1,12 +1,12 @@
-import { FiltersFields } from './FiltersFields';
+import { Filter } from './Filter';
 import { Populate } from './Populate';
 import { SortFields } from './SortFields';
 
 export interface Query {
-  select: string;
+  select?: string;
   page?: number;
   limit?: number;
   sort?: SortFields;
-  populate?: Populate[];
-  filter?: FiltersFields;
+  populate?: Populate;
+  filter?: Filter;
 }

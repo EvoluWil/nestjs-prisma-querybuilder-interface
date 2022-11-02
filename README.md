@@ -10,7 +10,23 @@
 
 <br/>
 
-### Documentação / Documentation
+### What's new
+
+- **Filter in Populate**
+
+  You can filter inside populate
+
+- **Insensitive Case**
+
+  now in the filter you can search with insensitive case
+
+- **Verbose**
+
+  You can filter and populate with verbose method or non verbose
+
+<hr>
+
+### Documentation
 
 - **How to install it?**
 
@@ -83,58 +99,36 @@
 
   - Usage
 
-    | Name     | Type              | exemple                                          |
-    | -------- | ----------------- | ------------------------------------------------ |
-    | select   | string            | select: 'name email',                            |
-    | page     | number            | page: 2,                                         |
-    | limit    | number            | limit: 20,                                       |
-    | sort     | SortFields        | sort: {field: string, criteria: 'asc'},          |
-    | populate | Populate [ ]      | populate: [{path: 'car', select: 'model plate'}] |
-    | filter   | FiltersFields [ ] | filter: [{name: 'jonas'}, {value: { gte: 4 }}]   |
+    | Name     | Type       | exemple                                          |
+    | -------- | ---------- | ------------------------------------------------ |
+    | select   | string     | select: 'name email',                            |
+    | page     | number     | page: 2,                                         |
+    | limit    | number     | limit: 20,                                       |
+    | sort     | SortFields | sort: {field: string, criteria: 'asc'},          |
+    | populate | Populate   | populate: [{path: 'car', select: 'model plate'}] |
+    | filter   | Filter     | filter: [{name: 'jonas'}, {value: { gte: 4 }}]   |
 
       <br/>
 
 - **Exported Interfaces**
 
+  ```tsx
+  import {
+    Query,
+    Populate,
+    Filter
+  } from 'nestjs-prisma-querybuilder-interface';
+  ```
+
   - **Query**
 
-    is a full types
+    all types
 
   - **Populate**
+  - **Filter**
+  - **Operators**
 
-    | Name     | Type         | exemple                                     |
-    | -------- | ------------ | ------------------------------------------- |
-    | path     | string       | path: 'picture'                             |
-    | select   | string       | select: 'url extension',                    |
-    | populate | Populate [ ] | populate: [{path: 'post', select: 'title'}] |
-
-  <br/>
-
-  - **FilterFields**
-
-    | Name | Type       | exemple                                                             |
-    | ---- | ---------- | ------------------------------------------------------------------- |
-    | x    | Filter     | {name: { contains: 'Jonas' } }                                      |
-    | and  | Filter [ ] | {and: [{name: { contains: 'Jonas' }, {active: true }}]}             |
-    | or   | Filter [ ] | {or: [{post: { contains: 'hello' }, {post: { contains: 'world' }}]} |
-
-    - **Filter**
-
-      { key: value } with Operator 'equals'
-
-      exemple: { postId: 147 }
-
-      or
-
-      { key: { operator: value } }
-
-      exemple: { postId: { startsWith : 147 } }
-
-      <br/>
-
-    - **Operators**
-
-      contains, endsWith, startsWith, equals, gt, gte, in, lt, lte ,not, notIn
+    contains, endsWith, startsWith, equals, gt, gte, in, lt, lte ,not, notIn
 
   <br/>
 
@@ -181,6 +175,104 @@
       }
     ]
   });
+  ```
+
+- **Populate**
+
+  ```tsx
+  const populate: Populate = [
+    {
+      path: 'car',
+      select: 'model plate',
+      filter: [{path: 'name', value: 'ford', operator: 'contains'}],
+      populate: [
+        {
+          path: 'brand',
+          select: 'name',
+        }
+      ],
+      primaryKey: 'yourTablePrimaryKey' // default 'id'
+    },
+
+    // Or
+
+    {
+      car: 'model plate',
+      filter: [{name: {contains: 'ford'}],
+      populate: [{brand: 'name'}],
+      primaryKey: 'yourTablePrimaryKey' // default 'id'
+    },
+  ],
+  ```
+
+- **Filter**
+
+  ```tsx
+  const filter: Filter = [
+    {
+      path: 'createdAt',
+      value: new Date(),
+      operator: 'lte'
+    },
+    {
+      or: [
+        {
+          path: 'role',
+          value: 'admin',
+          operator: 'equals'
+        },
+        {
+          path: 'role',
+          value: 'system',
+          operator: 'equals'
+        }
+      ]
+    },
+    {
+      and: [
+        {
+          path: 'name',
+          value: 'Ricky',
+          operator: 'equals',
+          insensitive: true
+        },
+        {
+          path: 'lastName',
+          value: 'Morty',
+          operator: 'contains',
+          insensitive: true
+        }
+      ]
+    }
+  ];
+
+  // Or
+
+  const filter: Filter = [
+    {
+      createdAt: { lte: new Date() }
+    },
+    {
+      or: [
+        {
+          role: 'admin'
+        },
+        {
+          role: 'system'
+        }
+      ]
+    },
+    {
+      and: [
+        {
+          name: { equals: 'Ricky', insensitive: true }
+        },
+        {
+          lastName: { contains: 'Morty', insensitive: true }
+        }
+      ]
+    }
+  ];
   ```
 
 ### END

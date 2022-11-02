@@ -1,4 +1,4 @@
-export const getType = (value: any) => {
+export const getType = value => {
   switch (typeof value) {
     case 'string':
       return 'string';

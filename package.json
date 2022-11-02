@@ -1,6 +1,6 @@
 {
   "name": "nestjs-prisma-querybuilder-interface",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Frontend interface to nestjs-prisma-querybuilder",
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
@@ -22,7 +22,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "teste": "npm run build && node ./dist/teste.js"
   },
   "repository": {
     "type": "git",

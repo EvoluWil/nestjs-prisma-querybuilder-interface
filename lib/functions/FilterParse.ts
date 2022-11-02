@@ -1,16 +1,74 @@
-import { ObjectParse } from './ObjectParse';
+import { Filter, FiltersField } from '../interfaces/Filter';
+import { getType } from './GetType';
 
-export const FilterParse = (filter: any, filterGroup: 'and' | 'or') => {
-  if (filter?.length) {
-    return filter.map(filter => {
-      if (filter?.and) {
-        return FilterParse(filter.and, 'and');
+export const FilterParse = (filters, filterGroup?: string): Filter => {
+  return filters.map(filter => {
+    let parsedFilter: FiltersField = {};
+    Object.keys(filter)?.forEach(key => {
+      if (key === 'path') {
+        parsedFilter = {
+          ...parsedFilter,
+          path: filter?.path
+        };
+      } else if (key === 'value') {
+        parsedFilter = {
+          ...parsedFilter,
+          value: filter?.value
+        };
+      } else if (key === 'insensitive') {
+        parsedFilter = {
+          ...parsedFilter,
+          insensitive: filter?.insensitive
+        };
+      } else if (key === 'operator') {
+        parsedFilter = {
+          ...parsedFilter,
+          operator: filter?.operator
+        };
+      } else {
+        if (getType(filter[key]) === 'object') {
+          if (filter[key]?.insensitive) {
+            parsedFilter = {
+              ...parsedFilter,
+              insensitive: filter[key]?.insensitive
+            };
+            delete filter[key].insensitive;
+          }
+          parsedFilter = {
+            ...parsedFilter,
+            operator: Object.keys(filter[key])[0],
+            value: Object.values(filter[key])[0],
+            path: key
+          };
+        } else {
+          parsedFilter = {
+            ...parsedFilter,
+            operator: 'equals',
+            path: key,
+            value: filter[key]
+          };
+        }
       }
-      if (filter?.or) {
-        return FilterParse(filter.or, 'or');
+
+      parsedFilter = {
+        ...parsedFilter,
+        type: getType(parsedFilter['value'])
+      };
+
+      if (parsedFilter['type'] === 'date') {
+        parsedFilter = {
+          ...parsedFilter,
+          value: new Date(parsedFilter['value']).toISOString()
+        };
       }
-      const parsedObject = ObjectParse(filter)[0];
-      return { ...parsedObject, filterGroup };
+
+      if (filterGroup) {
+        parsedFilter = {
+          ...parsedFilter,
+          filterGroup
+        };
+      }
     });
-  }
+    return parsedFilter;
+  });
 };

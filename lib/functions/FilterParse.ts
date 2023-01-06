@@ -1,7 +1,7 @@
 import { Filter, FiltersField } from '../interfaces/Filter';
 import { getType } from './GetType';
 
-export const FilterParse = (filters, filterGroup?: string): Filter => {
+export const FilterParse = (filters = [], filterGroup?: string): Filter => {
   return filters.map(filter => {
     let parsedFilter: FiltersField = {};
     Object.keys(filter)?.forEach(key => {

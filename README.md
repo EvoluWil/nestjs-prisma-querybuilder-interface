@@ -30,14 +30,20 @@
 
 - **How to install it?**
 
+  #### npm
+
   ```sh
   npm install --save nestjs-prisma-querybuilder-interface
-  # or
+  ```
+  
+  #### yarn
+  
+  ```sh
   yarn add nestjs-prisma-querybuilder-interface
   ```
 
 
-- **Property**
+- **Properties**
 
   - Usage
 

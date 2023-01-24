@@ -36,64 +36,6 @@
   yarn add nestjs-prisma-querybuilder-interface
   ```
 
-- **How to use it?**
-
-  - use in PARAMS with **AXIOS**
-
-    <br/>
-
-    ```tsx
-    import { QueryString, Query } from 'nestjs-prisma-querybuilder-interface';
-
-    const query: Query = {
-      select: 'message title date',
-      populate: [
-        {
-          path: 'user',
-          select: 'name email'
-        }
-      ],
-      sort: { field: name, criteria: 'asc' },
-      page: 1,
-      limit: 20
-    };
-
-    axios.get('http://example.com/movies', {
-      params: query,
-      paramsSerializer: params => QueryString(params)
-    });
-    ```
-
-    <br/>
-
-  - use in URL
-
-    <br/>
-
-    ```tsx
-    import { QueryString } from 'nestjs-prisma-querybuilder-interface';
-
-    const query = QueryString({
-      select: 'message title date',
-      populate: [
-        {
-          path: 'user',
-          select: 'name email'
-        }
-      ],
-      sort: 'asc',
-      sortField: 'date',
-      limit: 20
-    });
-
-    fetch(`http://example.com/movies?${query}`);
-
-    // with axios
-
-    axios.get(`http://example.com/movies?${query}`);
-    ```
-
-  <br/>
 
 - **Property**
 
@@ -108,7 +50,7 @@
     | populate | Populate   | populate: [{path: 'car', select: 'model plate'}] |
     | filter   | Filter     | filter: [{name: 'jonas'}, {value: { gte: 4 }}]   |
 
-      <br/>
+<br/>
 
 - **Exported Interfaces**
 
@@ -194,7 +136,7 @@
       primaryKey: 'yourTablePrimaryKey' // default 'id'
     },
 
-    // Or
+    // Non verbose syntax
 
     {
       car: 'model plate',
@@ -246,7 +188,7 @@
     }
   ];
 
-  // Or
+  // Non verbose syntax
 
   const filter: Filter = [
     {

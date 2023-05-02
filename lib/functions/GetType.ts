@@ -7,10 +7,7 @@ export const getType = value => {
     case 'boolean':
       return 'boolean';
     default: {
-      if (value instanceof Date) {
-        return 'date';
-      }
-      return 'object';
+      return 'date';
     }
   }
 };

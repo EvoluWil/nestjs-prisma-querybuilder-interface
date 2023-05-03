@@ -1,7 +1,7 @@
 import { Operator } from './Operator';
 export type FiltersField = {
   path: string;
-  value: any;
+  value?: any;
   insensitive?: boolean;
   operator?: Operator;
 };
@@ -43,4 +43,5 @@ export type FilterInPopulate = Array<
   | { or: FilterInPopulate }
   | { and: FilterInPopulate }
   | { not: FilterInPopulate }
+  | { filter: FilterInPopulate }
 >;

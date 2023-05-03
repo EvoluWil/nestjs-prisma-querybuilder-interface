@@ -20,10 +20,6 @@
 
   now in the filter you can search with insensitive case
 
-- **Verbose**
-
-  You can filter and populate with verbose method or non verbose
-
 <hr>
 
 ### Documentation
@@ -35,13 +31,12 @@
   ```sh
   npm install --save nestjs-prisma-querybuilder-interface
   ```
-  
+
   #### yarn
-  
+
   ```sh
   yarn add nestjs-prisma-querybuilder-interface
   ```
-
 
 - **Properties**
 
@@ -76,7 +71,7 @@
   - **Filter**
   - **Operators**
 
-    contains, endsWith, startsWith, equals, gt, gte, in, lt, lte ,not, notIn
+    contains, endsWith, startsWith, equals, gt, gte, in, lt, lte ,not, notIn, hasEvery, hasSome, has, isEmpty;
 
   <br/>
 
@@ -99,27 +94,8 @@
     ],
     filter: [
       {
-        createdAt: { lte: new Date() }
-      },
-      {
-        or: [
-          {
-            role: 'admin'
-          },
-          {
-            active: true
-          }
-        ]
-      },
-      {
-        and: [
-          {
-            firstName: 'Matt'
-          },
-          {
-            lastName: { contains: 'Ryan' }
-          }
-        ]
+        path: 'plate',
+        value: 'XFS1T67'
       }
     ]
   });
@@ -132,25 +108,16 @@
     {
       path: 'car',
       select: 'model plate',
-      filter: [{path: 'name', value: 'ford', operator: 'contains'}],
+      filter: [{ path: 'name', value: 'ford', operator: 'contains' }],
       populate: [
         {
           path: 'brand',
-          select: 'name',
+          select: 'name'
         }
       ],
       primaryKey: 'yourTablePrimaryKey' // default 'id'
-    },
-
-    // Non verbose syntax
-
-    {
-      car: 'model plate',
-      filter: [{name: {contains: 'ford'}],
-      populate: [{brand: 'name'}],
-      primaryKey: 'yourTablePrimaryKey' // default 'id'
-    },
-  ],
+    }
+  ];
   ```
 
 - **Filter**
@@ -189,34 +156,6 @@
           value: 'Morty',
           operator: 'contains',
           insensitive: true
-        }
-      ]
-    }
-  ];
-
-  // Non verbose syntax
-
-  const filter: Filter = [
-    {
-      createdAt: { lte: new Date() }
-    },
-    {
-      or: [
-        {
-          role: 'admin'
-        },
-        {
-          role: 'system'
-        }
-      ]
-    },
-    {
-      and: [
-        {
-          name: { equals: 'Ricky', insensitive: true }
-        },
-        {
-          lastName: { contains: 'Morty', insensitive: true }
         }
       ]
     }

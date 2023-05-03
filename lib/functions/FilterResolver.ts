@@ -1,22 +1,48 @@
-import { FiltersField } from 'lib/interfaces/Filter';
 import { FilterParse } from './FilterParse';
 
 export const FilterResolver = filters => {
-  const FilterResolved = [];
-  filters.forEach(filter => {
+  return filters.map(filter => {
     if (filter?.and) {
-      return FilterResolved.push(...FilterParse(filter.and, 'and'));
+      if (filter.and) {
+        return {
+          path: filter.path,
+          filter: FilterParse(filter.and, `and`)
+        };
+      }
+
+      return FilterParse(filter.and, 'and');
     }
 
     if (filter?.or) {
-      return FilterResolved.push(...FilterParse(filter.or, 'or'));
+      if (filter.or) {
+        return {
+          path: filter.path,
+          filter: FilterParse(filter.or, `or`)
+        };
+      }
+
+      return FilterParse(filter.or, 'or');
     }
 
     if (filter?.not) {
-      return FilterResolved.push(...FilterParse(filter.not, 'not'));
+      if (filter.path) {
+        return {
+          path: filter.path,
+          filter: FilterParse(filter.not, `not`)
+        };
+      }
+      return FilterParse(filter.not, 'not');
     }
 
-    return FilterResolved.push(...FilterParse([filter]));
+    if (filter?.filter) {
+      if (filter.path) {
+        return {
+          path: filter.path,
+          filter: FilterParse(filter.filter)
+        };
+      }
+    }
+
+    return FilterParse([filter])[0];
   });
-  return FilterResolved;
 };

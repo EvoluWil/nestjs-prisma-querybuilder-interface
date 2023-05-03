@@ -1,17 +1,20 @@
 import { Operator } from './Operator';
+
 export type FiltersField = {
   path: string;
   value?: any;
   insensitive?: boolean;
   operator?: Operator;
-};
-export type ParsedFilter = FiltersField & {
-  type: 'string' | 'number' | 'boolean' | 'date';
-  filterGroup?: 'and' | 'or' | 'not';
+  filterInsideOperator?: 'none' | 'some' | 'every';
+  or?: Filter;
+  and?: Filter;
+  not?: Filter;
+  filter?: Filter;
 };
 
-type FilterFieldsInPopulate = FiltersField & {
-  filterInsideOperator: 'none' | 'some' | 'every';
+export type ParsedFilter = FiltersField & {
+  type: 'string' | 'number' | 'boolean' | 'date';
+  filterGroup?: 'and' | 'or' | 'not' | 'filter';
 };
 
 /**
@@ -35,13 +38,9 @@ type FilterFieldsInPopulate = FiltersField & {
  * @default false
  */
 export type Filter = Array<
-  FiltersField | { or: Filter } | { and: Filter } | { not: Filter }
->;
-
-export type FilterInPopulate = Array<
-  | FilterFieldsInPopulate
-  | { or: FilterInPopulate }
-  | { and: FilterInPopulate }
-  | { not: FilterInPopulate }
-  | { filter: FilterInPopulate }
+  | FiltersField
+  | { or: Filter }
+  | { and: Filter }
+  | { not: Filter }
+  | { filter: Filter }
 >;

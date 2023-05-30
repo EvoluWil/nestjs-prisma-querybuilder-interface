@@ -54,8 +54,8 @@ export const FilterParse = (
       filterParsed.insensitive = filter.insensitive;
     }
 
-    if (filterGroup) {
-      filterParsed.filterGroup = filterGroup;
+    if (filterGroup || filter.filterGroup) {
+      filterParsed.filterGroup = filterGroup || filter.filterGroup;
     }
     return filterParsed;
   });

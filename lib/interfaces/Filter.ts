@@ -6,6 +6,7 @@ export type FiltersField = {
   insensitive?: boolean;
   operator?: Operator;
   filterInsideOperator?: 'none' | 'some' | 'every';
+  filterGroup?: 'and' | 'or' | 'not' | 'filter';
   or?: Filter;
   and?: Filter;
   not?: Filter;

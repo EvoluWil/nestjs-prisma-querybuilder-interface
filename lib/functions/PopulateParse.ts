@@ -2,7 +2,7 @@ import { Populate } from '../interfaces/Populate';
 import { FilterResolver } from './FilterResolver';
 
 export const PopulateParse = (populates: Populate): Populate => {
-  return populates.map(populate => {
+  return populates.map((populate) => {
     const currentPopulate = { ...populate };
     if (currentPopulate.filter) {
       currentPopulate.filter = FilterResolver(currentPopulate.filter);

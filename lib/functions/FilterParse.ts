@@ -40,7 +40,7 @@ export const FilterParse = (filters = [], filterGroup?: ParsedFilter['filterGrou
       insensitive: filter?.insensitive,
       filterInsideOperator: filter?.filterInsideOperator,
 
-      filterGroup: filterGroup
+      filterGroup: filterGroup || filter?.filterGroup
     };
 
     return filterParsed;

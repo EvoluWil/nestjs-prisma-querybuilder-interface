@@ -7,8 +7,10 @@ export function QueryString(query: Query): string {
   if (query && query.filter) {
     query.filter = FilterResolver(query.filter);
   }
+
   if (query && query.populate) {
     query.populate = PopulateParse(query.populate);
   }
+
   return stringify(query);
 }

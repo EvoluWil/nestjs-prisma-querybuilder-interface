@@ -2,61 +2,47 @@ import { ParsedFilter } from '../interfaces/Filter';
 import { FilterResolver } from './FilterResolver';
 import { getType } from './GetType';
 
-export const FilterParse = (
-  filters = [],
-  filterGroup?: ParsedFilter['filterGroup']
-) => {
-  return filters.map(filter => {
-    const path = filter.path;
-    if (filter.and) {
+export const FilterParse = (filters = [], filterGroup?: ParsedFilter['filterGroup']) => {
+  return filters.map((filter) => {
+    if (filter?.and) {
       return {
-        path,
-        filter: FilterParse(filter.and, `and`)
+        ...filter,
+        filter: FilterParse(filter?.and, 'and')
       };
     }
 
-    if (filter.or) {
+    if (filter?.or) {
       return {
-        path,
-        filter: FilterParse(filter.or, `or`)
+        ...filter,
+        filter: FilterParse(filter?.or, 'or')
       };
     }
 
-    if (filter.not) {
+    if (filter?.not) {
       return {
-        path,
-        filter: FilterParse(filter.not, `not`)
+        ...filter,
+        filter: FilterParse(filter?.not, 'not')
       };
     }
 
-    if (filter.filter) {
+    if (filter?.filter) {
       return {
-        path,
-        filter: FilterResolver(filter.filter)
+        ...filter,
+        filter: FilterResolver(filter?.filter)
       };
     }
-    const value = filter.value;
-    const operator = filter.operator || 'equals';
-    const type = getType(value);
 
     const filterParsed: ParsedFilter = {
-      path,
-      type,
-      value,
-      operator
+      path: filter?.path,
+      value: filter?.value,
+      operator: filter?.operator,
+      type: getType(filter?.value),
+      insensitive: filter?.insensitive,
+      filterInsideOperator: filter?.filterInsideOperator,
+
+      filterGroup: filterGroup
     };
 
-    if (filter.filterInsideOperator) {
-      filterParsed.filterInsideOperator = filter.filterInsideOperator;
-    }
-
-    if (filter.insensitive) {
-      filterParsed.insensitive = filter.insensitive;
-    }
-
-    if (filterGroup) {
-      filterParsed.filterGroup = filterGroup;
-    }
     return filterParsed;
   });
 };

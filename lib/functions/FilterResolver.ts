@@ -1,13 +1,14 @@
+import { Filter, FiltersField } from 'lib/interfaces/Filter';
 import { FilterParse } from './FilterParse';
 
-export const FilterResolver = filters => {
+export const FilterResolver = (filters) => {
   return filters
-    .map(filter => {
+    .map((filter) => {
       if (filter?.and) {
         if (filter.path) {
           return {
-            path: filter.path,
-            filter: FilterParse(filter.and, `and`)
+            ...filter,
+            filter: FilterParse(filter.and, 'and')
           };
         }
 
@@ -17,27 +18,29 @@ export const FilterResolver = filters => {
       if (filter?.or) {
         if (filter.path) {
           return {
-            path: filter.path,
-            filter: FilterParse(filter.or, `or`)
+            ...filter,
+            filter: FilterParse(filter.or, 'or')
           };
         }
+
         return FilterParse(filter.or, 'or');
       }
 
       if (filter?.not) {
         if (filter.path) {
           return {
-            path: filter.path,
-            filter: FilterParse(filter.not, `not`)
+            ...filter,
+            filter: FilterParse(filter.not, 'not')
           };
         }
+
         return FilterParse(filter.not, 'not');
       }
 
       if (filter?.filter) {
         if (filter.path) {
           return {
-            path: filter.path,
+            ...filter,
             filter: FilterParse(filter.filter)
           };
         }

@@ -1,9 +1,19 @@
 {
   "name": "nestjs-prisma-querybuilder-interface",
-  "version": "1.3.2",
+  "author": "Willian Rodrigues <willian.rsilva1994@gmail.com>",
+  "version": "1.4.0",
   "description": "Frontend interface to nestjs-prisma-querybuilder",
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
+  "license": "ISC",
+  "homepage": "https://github.com/EvoluWil/nestjs-prisma-querybuilder-interface#readme",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Willian-Rodrigues/nestjs-prisma-querybuilder-interface.git"
+  },
+  "bugs": {
+    "url": "https://github.com/EvoluWil/nestjs-prisma-querybuilder-interface/issues"
+  },
   "keywords": [
     "query",
     "querybuilder",
@@ -25,12 +35,6 @@
     "prepare": "npm run build",
     "teste": "npm run build && node ./dist/teste.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:Willian-Rodrigues/nestjs-prisma-querybuilder-interface.git"
-  },
-  "author": "Will",
-  "license": "ISC",
   "dependencies": {
     "qs": "^6.10.3"
   },

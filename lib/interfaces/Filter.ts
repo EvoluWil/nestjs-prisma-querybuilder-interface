@@ -38,10 +38,4 @@ export type ParsedFilter = FiltersField & {
  * insensitive: true | false
  * @default false
  */
-export type Filter = Array<
-  | FiltersField
-  | { or: Filter }
-  | { and: Filter }
-  | { not: Filter }
-  | { filter: Filter }
->;
+export type Filter = Array<FiltersField | { or: Filter } | { and: Filter } | { not: Filter } | { filter: Filter }>;
